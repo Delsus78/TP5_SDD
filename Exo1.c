@@ -2,8 +2,8 @@
 
 typedef struct maillon
 {
-	maillon* tete ;
-	maillon* queue ;
+	struct maillon* tete ;
+	struct maillon* queue ;
 	float top ;
 }cellule;
 
@@ -16,6 +16,4 @@ void initialiser (cellule * file){
 	file -> tete = NULL ;
 }
 
-int top_file () {
-        __CLR_OR_THIS_CALLad
-}
+int top_file ()
