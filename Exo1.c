@@ -16,4 +16,6 @@ void initialiser (cellule * file){
 	file -> tete = NULL ;
 }
 
-int top_file ()
+int top_file () {
+        __CLR_OR_THIS_CALLad
+}
