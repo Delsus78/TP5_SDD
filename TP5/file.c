@@ -17,7 +17,7 @@ typedef struct maillon
 typedef struct file{
 	cellule * tete;
 	cellule * queue;
-	client top;
+	client top; //tete de file: premier element à supprimer 
 }file;
 
 
@@ -73,9 +73,10 @@ int defiler (file * pfile, client * pClient){
 		//renseigne le client que je veux supprimer (top)
 		*pClient = pfile->top ;
 		//création cellule temporaire pour rupture de la chaîne
-		cellule * temp = pClient->tete;
+		cellule * temp = pfile->tete;
 		pfile->tete = temp->suivant; //Le second maillon devient La tete de file 
-		pfile->tete->client = pfile->top ; //Retrait de L'ancienne tete de file de la chaîne
+		pfile->top = pfile->tete->client  ; 
+		//Retrait de L'ancienne tete de file de la chaîne
 		temp->suivant = NULL ;	
 		return 1;
 	}
