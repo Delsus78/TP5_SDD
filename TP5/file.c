@@ -53,10 +53,10 @@ int enfiler (file * pfile, client * new){
 	}
 	else{
 		//crée une nouveau maillon à relier à liste chaînée
-		cellule N = malloc(sizeof(cellule)) ;
+		cellule *N = malloc(sizeof(cellule)) ;
 		//remplit le nouveau maillon
-		N.client = *new ;
-		N.suivant = NULL;
+		N->client = *new ;
+		N->suivant = NULL;
 		cellule * temp = pfile -> queue;
 		temp->suivant = new;
 		pfile->queue = N ;

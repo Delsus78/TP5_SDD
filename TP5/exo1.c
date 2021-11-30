@@ -1,17 +1,19 @@
 #include "file.c"
+#include "stdlib.h"
+#include "stdio.h"
 
-tri(Client c) {
+tri(client c) {
 
 }
 
 int main(int argc, char const *argv[])
 {
     // init Patient
-    Client p1 = malloc(sizeof(Client));
-    Client p2 = malloc(sizeof(Client));
-    Client p3 = malloc(sizeof(Client));
-    Client p4 = malloc(sizeof(Client));
-    Client p5 = malloc(sizeof(Client));
+    client *p1 = malloc(sizeof(client));
+    client *p2 = malloc(sizeof(client));
+    client *p3 = malloc(sizeof(client));
+    client *p4 = malloc(sizeof(client));
+    client *p5 = malloc(sizeof(client));
     
     // init valeurs temps
 
