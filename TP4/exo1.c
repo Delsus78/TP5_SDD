@@ -18,18 +18,7 @@ int multiply(int a, int b){
 		
 	}
 }
-/*
-int multiply (int a, int b){
-	else{
-		int res = a ;
-		int cpt = 1 ;
-		while (cpt < b){
-			res += a ;
-			cpt ++ ;
-		}
-		return res ;
-	}
-}*/
+
 
 int main(int argc, char const *argv[])
 {

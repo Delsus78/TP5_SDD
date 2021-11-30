@@ -1,0 +1,69 @@
+fonction factor(str : chaîne, length : entier, position : entier) : booléen
+début
+    booléen valide = vrai 
+
+    si str[position] != 'a' alors
+        si str[position] != '(' alors
+            valide = faux
+        sinon 
+            position ++
+
+            si expr(str,length,position) == vrai alors
+                si str[position] == ')' alors
+                    position ++
+                sinon
+                    valide = faux
+                fin_si
+            sinon
+                valide = faux
+            fin_si
+        fin_si
+    sinon
+        position ++
+    fin_si
+
+    retourner valide
+fin
+
+fonction term(str : chaîne, length : entier, position : entier) : booléen
+début
+    booléen valide = vrai 
+    si factor(str,length,position) == vrai alors
+        si str[position] == '*' alors
+            position ++
+            si factor(str,length,position) == faux alors
+                valide = faux
+            fin_si
+        fin_si
+    sinon
+        valide = faux
+    fin_si
+    retourner valide
+fin
+
+fonction expr(str : chaîne, length : entier, position : entier) : booléen
+début
+    booléen valide = vrai
+    si term(str,length,position) == vrai alors
+        si str[position] == '+' alors
+            position ++
+            si term(str,length,position) == faux alors
+                valide = faux
+            fin_si
+        fin_si
+    sinon
+        valide = faux
+    fin_si
+
+    retourner valide
+fin
+
+fonction test(str : chaîne, length : entier, position : entier) : booléen
+début
+    booléen valide = faux
+    si expr(str,length,position) == vrai ET legnth == position alors
+        valide = vrai
+    fin_si
+
+    retourner valide
+fin

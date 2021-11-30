@@ -1,66 +1,69 @@
 #include "string.h"
 #include <stdio.h>
 
-char* cut(const char * strToCut,int start, int end) {
-    char* part;
-    if (end < strlen(strToCut)) {
-        for (size_t i = start; i < end; i++) {
-            char temp[2];
-            temp[0] = strToCut[i];
-            printf(temp);
-            strcat(part,temp);
+int expr(char * str, int length, int* pos);
+
+int factor(char *str, int length, int* pos) {
+    int valid = 1;
+
+    if (str[*pos] != 'a') {
+        if (str[*pos] != '(') {
+            valid = 0; // pas de parenthese ni de a, pas bon
+        } else {
+            // parenthese trouvé, on check une expression
+            *pos = *pos + 1;
+            if (expr(str,length,pos) == 1) {
+                if (str[*pos] == ')') { // deuxieme parenthèse
+                    *pos = *pos + 1;
+                } else valid = 0;
+            } else valid = 0;
+        }
+    } else { // si c'est un a, on passe au symbole suivant
+        *pos = *pos + 1;
+    }
+
+    return valid;
+}
+
+int term(char *str, int length, int* pos) {
+    int valid = 1;
+    if (factor(str,length,pos) == 1) {
+        if(str[*pos] == '*') {
+            *pos = *pos + 1;
+            if (factor(str,length,pos) != 1) {
+                valid = 0;
+            }
         }
     } else {
-        printf("error");
+        valid = 0;
     }
-    return part;
-}
-
-int getsymb(char * str, int length) {
-    int valid = 1;
-
 
     return valid;
 }
 
-int expr(char * str, int length) {
+int expr(char * str, int length, int* pos) {
     int valid = 1;
-    char* part;
-    if (length > 0 ) {
+
+    if (term(str,length,pos) == 1) {
+        if(str[*pos] == '+') {
+            *pos = *pos + 1;
+            if (term(str,length,pos) != 1) {
+                valid = 0;
+            }
+        }
         
-        //term(part,);
-
-    } else valid = 0;
-
-
-
+    } else {
+        valid = 0;
+    }
 
     return valid;
 }
 
-
-int factor(char *str, int length) {
+int test(char* str, int length, int* pos ) {
     int valid = 0;
-
-    if(str == "a") {
+    if (expr(str,length,pos) == 1 && length == *pos) {
         valid = 1;
-    } else if (str[0] = '(') {
-        char * part = cut(str,1,length-1);
-        
-        printf("%s",part);
-        printf("\n");
-        expr(part,strlen(part));
     }
-
-    return valid;
-}
-
-int term(char *str, int length) {
-    int valid = 1;
-    char* part;
-
-    factor(part,strlen(part));
-
     return valid;
 }
 
@@ -70,14 +73,15 @@ int main(int argc, char *argv[])
     if(argc == 2) {
         char* text = argv[1];
         int tailleText = strlen(text);
-        factor(text,tailleText);
+        
+        int pos = 0;
 
         // Valide ou non
-        /*if (expr(text,tailleText) == 1) {
+        if (test(text,tailleText,&pos) == 1) {
             printf("Le text est valide.");
         } else {
             printf("Le text n'est pas valide.");
-        }*/
+        }
     }
 
     return 0;
