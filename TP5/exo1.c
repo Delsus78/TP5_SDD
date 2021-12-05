@@ -1,6 +1,7 @@
 #include "file.c"
 #include "stdlib.h"
 #include "stdio.h"
+#include "string.h"
 #define NB_PATIENTS 5
 
 /* *********AJOUT IMPLEMENTATIONS FILES ************* */
@@ -43,7 +44,7 @@ void tri(client tab [], int n) {
         t_total += tab[i].t_traitement ;
     }
 
-    int temps ,it = 0 ;
+    int temps=0 ,it = 0, examination_time =0 ;
     while ((temps <= t_total) && (it < n)){
         printf("il est t=%d \n", temps) ;
         /*if (temps == tab[it].t_arrivee){
@@ -52,7 +53,16 @@ void tri(client tab [], int n) {
             it++;
         }*/
 
-        if(temps == temps+tab[it].t_traitement){
+        if( (it==0) && (temps==tab[it].t_traitement) ){
+            printf("ici\n") ;
+            printf("Traitement du client numero %d (%s) est terminé \n", it, tab[it].nom) ;
+            defiler(&f, &current) ;
+            printf("Client %s parti \n", current.nom) ;
+            examination_time += tab[it].t_traitement ;
+            it++ ;
+        }
+
+        else if(temps == examination_time+tab[it].t_traitement){
             printf("Traitement du client numero %d (%s) est terminé \n", it, tab[it].nom) ;
             defiler(&f, &current) ;
             printf("Client %s parti \n", current.nom) ;
@@ -60,6 +70,7 @@ void tri(client tab [], int n) {
         }
 
         temps++;
+        examination_time ++;
     }
 
     if(it == n)
@@ -79,23 +90,23 @@ int main(int argc, char const *argv[])
     client tab [NB_PATIENTS] ;
     // init Patient
     client p1, p2, p3, p4, p5;
-    strcpit(p1.nom, "Edouard");
+    strcpy(p1.nom, "Edouard");
     p1.t_arrivee = 3 ;
     p1.t_traitement = 10 ;
 
-    strcpit(p2.nom, "LePen");
+   strcpy(p2.nom, "LePen");
     p2.t_arrivee = 0 ;
     p2.t_traitement = 6;
     
-    strcpit(p3.nom, "Zemmour");
+   strcpy(p3.nom, "Zemmour");
     p3.t_arrivee = 2 ;
     p3.t_traitement = 8 ;
 
-    strcpit(p4.nom, "Melenchon");
+   strcpy(p4.nom, "Melenchon");
     p4.t_arrivee = 4 ;
     p4.t_traitement = 9 ;
 
-    strcpit(p5.nom, "Macron");
+   strcpy(p5.nom, "Macron");
     p5.t_arrivee = 6 ;
     p5.t_traitement = 10 ;
     // init valeurs temps
