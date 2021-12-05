@@ -26,6 +26,17 @@ void initialiser (file f){
 	f.queue = NULL ;
 }
 
+
+
+int estPleine (file f){
+	return 0; //Une file n'est jamais pleine dans cette implémentation
+}
+
+
+int estVide  (file f){
+	return (f.tete==NULL) ;
+}
+
 int top_file (file f, client  * next){
 	if (estVide (f) == 1){
 		printf("Pile vide \n");
@@ -35,15 +46,6 @@ int top_file (file f, client  * next){
 		*next = f.tete->client ;
 		return 1 ;
 	}
-}
-
-int estPleine (file f){
-	return 0; //Une file n'est jamais pleine dans cette implémentation
-}
-
-
-int estVide  (file f){
-	return (f.tete==NULL) ;
 }
 
 int enfiler (file * pfile, client * new){
@@ -62,13 +64,17 @@ int enfiler (file * pfile, client * new){
 	}
 	else{
 		//crée une nouveau maillon à relier à liste chaînée
-		cellule *N = malloc(sizeof(cellule)) ;
+		cellule *N = (cellule *) malloc(sizeof(cellule)) ;
 		//remplit le nouveau maillon
 		N->client = *new ;
 		N->suivant = NULL;
-		cellule * temp = pfile -> queue;
-		temp->suivant = new;
+		pfile->queue->suivant = N ;
 		pfile->queue = N ;
+
+
+		/*cellule * temp = pfile -> queue;
+		temp->suivant = N ;
+		pfile->queue = N ;*/
 	}
 
 	pfile->top = pfile->tete->client ;
@@ -86,10 +92,12 @@ int defiler (file * pfile, client * pClient){
 		*pClient = pfile->top ;
 		//création cellule temporaire pour rupture de la chaîne
 		cellule * temp = pfile->tete;
-		pfile->tete = temp->suivant; //Le second maillon devient La tete de file 
-		pfile->top = pfile->tete->client  ; 
+		pfile->tete = temp->suivant;  
+		
 		//Retrait de L'ancienne tete de file de la chaîne
 		temp->suivant = NULL ;	
+		//Le second maillon devient La tete de file
+		pfile->top = pfile->tete->client ; 
 		return 1;
 	}
 }
