@@ -13,20 +13,12 @@
 /*--------------------------------------------------- */
 /*--------------------------------------------------- */
 
-/*void initStr (char * str) {
-    int n = strlen (str) ;
-    int i =0 ;
-    for(i=0; i<n; i++){
-        
-    }
-}*/
+
 
 
 /* ---------------------------------------------------------- */
 /* ---------------------------------------------------------- */
-
-
-void tri(client tab [], int n) {
+void simulation(client tab [], int n) {
 //Le tableau est déjà trié par ordre croissant de temps d'arrivée
     file f;
     initialiser (f);
@@ -39,41 +31,45 @@ void tri(client tab [], int n) {
 
     client current ;
 
-    int t_total = 0;
+    int t_total = 0, i=0 ;
     for(int i=0 ; i<n ; i++){
         t_total += tab[i].t_traitement ;
     }
 
-    int temps=0 ,it = 0, examination_time =0 ;
-    while ((temps <= t_total) && (it < n)){
-        printf("il est t=%d \n", temps) ;
-        /*if (temps == tab[it].t_arrivee){
-            printf("Le client %s numéro %d est arrivé\n", tab[it].nom, it);
-            enfiler (&f, &tab[it]) ;
-            it++;
-        }*/
+    i=0 ;
 
-        if( (it==0) && (temps==tab[it].t_traitement) ){
-            printf("ici\n") ;
-            printf("Traitement du client numero %d (%s) est terminé \n", it, tab[it].nom) ;
+    int temps=0 , examination_time =0 ;
+    while ((temps < t_total) && (i < n)){
+
+        printf("il est t=%d\n", temps) ;
+
+
+        if( (i == 0) && (temps == tab[i].t_traitement) ){
+            printf("Traitement du client numero %d (%s) est terminé \n", i, tab[i].nom) ;
             defiler(&f, &current) ;
             printf("Client %s parti \n", current.nom) ;
-            examination_time += tab[it].t_traitement ;
-            it++ ;
+
+            examination_time += tab[i].t_traitement ;
+            printf("***********************************\n") ;
+
+            i++ ;
         }
 
-        else if(temps == examination_time+tab[it].t_traitement){
-            printf("Traitement du client numero %d (%s) est terminé \n", it, tab[it].nom) ;
+        else if(temps == examination_time+tab[i].t_traitement && i!=0){
+            printf("Traitement du client numero %d (%s) est terminé \n", i, tab[i].nom) ;
             defiler(&f, &current) ;
             printf("Client %s parti \n", current.nom) ;
-            it++ ;
+            i++ ;
+            examination_time = temps ;
+            printf("***********************************\n") ;
+
         }
 
         temps++;
-        examination_time ++;
     }
+     
 
-    if(it == n)
+    if(i == n)
         printf("Fin de la journee!\n");
 
 }
@@ -108,7 +104,7 @@ int main(int argc, char const *argv[])
 
    strcpy(p5.nom, "Macron");
     p5.t_arrivee = 6 ;
-    p5.t_traitement = 10 ;
+    p5.t_traitement = 4 ;
     // init valeurs temps
 //---
    
@@ -123,6 +119,6 @@ int main(int argc, char const *argv[])
 
     //simulation
 
-    tri(tab, NB_PATIENTS); 
+    simulation(tab, NB_PATIENTS); 
     return 0;
 }
