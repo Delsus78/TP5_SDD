@@ -10,8 +10,8 @@ typedef struct client{
 
 typedef struct maillon
 {
-	struct cellule * suivant;
 	client client;
+	struct cellule * suivant;
 }cellule;
 
 typedef struct file{
@@ -32,7 +32,7 @@ int top_file (file f, client  * next){
 		return 0;
 	}
 	else{
-		*next = f.top ;
+		*next = f.tete->client ;
 		return 1 ;
 	}
 }
@@ -51,6 +51,15 @@ int enfiler (file * pfile, client * new){
 		printf("Pile pleine : Error \n") ;
 		return 0 ;
 	}
+	else if (estVide(*pfile)){
+		//crée une nouveau maillon à relier à liste chaînée
+		cellule *N = malloc(sizeof(cellule)) ;
+		//remplit le nouveau maillon
+		N->client = *new ;
+		N->suivant = NULL;
+		pfile->tete = N ;
+		pfile->queue= N ;
+	}
 	else{
 		//crée une nouveau maillon à relier à liste chaînée
 		cellule *N = malloc(sizeof(cellule)) ;
@@ -60,8 +69,11 @@ int enfiler (file * pfile, client * new){
 		cellule * temp = pfile -> queue;
 		temp->suivant = new;
 		pfile->queue = N ;
-		return 1;
 	}
+
+	pfile->top = pfile->tete->client ;
+	return 1 ; 
+
 }
 
 int defiler (file * pfile, client * pClient){

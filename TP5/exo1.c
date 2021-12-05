@@ -20,55 +20,83 @@
     }
 }*/
 
-tri(client tab [], int n) {
+
+/* ---------------------------------------------------------- */
+/* ---------------------------------------------------------- */
+
+
+void tri(client tab [], int n) {
 //Le tableau est déjà trié par ordre croissant de temps d'arrivée
     file f;
-    cellule c1, c2, c3, c4, c5 ;
-    c1.client = tab [0] ;
-    c2.client = tab [1] ;
-    c3.client = tab [2] ;
-    c4.client = tab [3] ;
-    c5.client = tab [4] ;
-
-    /*c1.suivant = &c2 ;
-    c2.suivant = &c3 ;
-    c3.suivant = &c4 ;
-    c4.suivant = &c5 ;
-    c5.suivant = NULL ;*/
-
     initialiser (f);
-    enfiler(&f, &c1) ;
-    enfiler (&f, &c2) ;
 
+    enfiler (&f, &tab[0]) ;
+    enfiler (&f, &tab[1]) ;
+    enfiler (&f, &tab[2]) ;
+    enfiler (&f, &tab[3]) ;
+    enfiler (&f, &tab[4]) ;
+
+    client current ;
+
+    int t_total = 0;
+    for(int i=0 ; i<n ; i++){
+        t_total += tab[i].t_traitement ;
+    }
+
+    int temps ,it = 0 ;
+    while ((temps <= t_total) && (it < n)){
+        printf("il est t=%d \n", temps) ;
+        /*if (temps == tab[it].t_arrivee){
+            printf("Le client %s numéro %d est arrivé\n", tab[it].nom, it);
+            enfiler (&f, &tab[it]) ;
+            it++;
+        }*/
+
+        if(temps == temps+tab[it].t_traitement){
+            printf("Traitement du client numero %d (%s) est terminé \n", it, tab[it].nom) ;
+            defiler(&f, &current) ;
+            printf("Client %s parti \n", current.nom) ;
+            it++ ;
+        }
+
+        temps++;
+    }
+
+    if(it == n)
+        printf("Fin de la journee!\n");
 
 }
+/* ---------------------------------------------------------- */
+/* ---------------------------------------------------------- */
+/* ---------------------------------------------------------- */
+
 
 int main(int argc, char const *argv[])
 {
     /*int n = 0 ;
-    printf("Combien y a t il de patients?\n");
+    printf("Combien it a t il de patients?\n");
     scanf("%d", &n);*/
     client tab [NB_PATIENTS] ;
     // init Patient
     client p1, p2, p3, p4, p5;
-    strcpy(p1.nom, "Hollande");
+    strcpit(p1.nom, "Edouard");
     p1.t_arrivee = 3 ;
     p1.t_traitement = 10 ;
 
-    strcpy(p2.nom, "LePen");
+    strcpit(p2.nom, "LePen");
     p2.t_arrivee = 0 ;
     p2.t_traitement = 6;
     
-    strcpy(p3.nom, "Zemmour");
+    strcpit(p3.nom, "Zemmour");
     p3.t_arrivee = 2 ;
     p3.t_traitement = 8 ;
 
-    strcpy(p4.nom, "Melenchon");
+    strcpit(p4.nom, "Melenchon");
     p4.t_arrivee = 4 ;
     p4.t_traitement = 9 ;
 
-    strcpy(p5.nom, "Macron");
-    p5.t_arrivee = 0 ;
+    strcpit(p5.nom, "Macron");
+    p5.t_arrivee = 6 ;
     p5.t_traitement = 10 ;
     // init valeurs temps
 //---
@@ -81,8 +109,9 @@ int main(int argc, char const *argv[])
     tab[3] = p4 ;
     tab[4] = p5 ;
 
-    //file triée
-    tri(tab, NB_PATIENTS); 
 
+    //simulation
+
+    tri(tab, NB_PATIENTS); 
     return 0;
 }
