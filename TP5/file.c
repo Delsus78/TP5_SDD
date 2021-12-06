@@ -11,7 +11,7 @@ typedef struct client{
 typedef struct maillon
 {
 	client client;
-	struct cellule * suivant;
+	struct maillon * suivant;
 }cellule;
 
 typedef struct file{
