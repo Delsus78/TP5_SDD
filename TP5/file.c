@@ -48,7 +48,7 @@ int top_file (file f, client  * next){
 	}
 }
 
-int enfiler (file * pfile, client * new){
+int enfiler (file * pfile, client * new){  //j'enfile à la fin de la liste
 	if(estPleine (*pfile) == 1){
 		printf("Pile pleine : Error \n") ;
 		return 0 ;
@@ -71,10 +71,6 @@ int enfiler (file * pfile, client * new){
 		pfile->queue->suivant = N ;
 		pfile->queue = N ;
 
-
-		/*cellule * temp = pfile -> queue;
-		temp->suivant = N ;
-		pfile->queue = N ;*/
 	}
 
 	pfile->top = pfile->tete->client ;
@@ -82,10 +78,16 @@ int enfiler (file * pfile, client * new){
 
 }
 
-int defiler (file * pfile, client * pClient){
+int defiler (file * pfile, client * pClient){  //je défile au début de la liste
 	if (estVide(*pfile)==1){
 		printf("Erreur! File vide\n");
 		return 0;
+	}
+	else if(pfile->tete->suivant == NULL){ // Si la file ne contient qu'un seul élément
+		*pClient = pfile->tete->client ;
+		pfile->tete = NULL;
+		pfile = NULL ;
+		return 1 ;
 	}
 	else {
 		//renseigne le client que je veux supprimer (top)
@@ -98,6 +100,7 @@ int defiler (file * pfile, client * pClient){
 		temp->suivant = NULL ;	
 		//Le second maillon devient La tete de file
 		pfile->top = pfile->tete->client ; 
+		free(temp) ;
 		return 1;
 	}
 }

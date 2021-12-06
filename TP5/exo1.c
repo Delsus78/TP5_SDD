@@ -30,25 +30,28 @@ void simulation(client tab [], int n) {
     enfiler (&f, &tab[4]) ;
 
     client current ;
+    int nb_elem = 5 ;
 
     int t_total = 0, i=0 ;
     for(int i=0 ; i<n ; i++){
         t_total += tab[i].t_traitement ;
     }
+    printf("temps total = %d\n", t_total) ;
 
     i=0 ;
 
     int temps=0 , examination_time =0 ;
-    while ((temps < t_total) && (i < n)){
+    while ((f.tete != NULL) && (i < n)){
 
-        printf("il est t=%d\n", temps) ;
+        printf("il est t=%d, CLient en consultation : n° %d\n", temps, i) ;
 
 
         if( (i == 0) && (temps == tab[i].t_traitement) ){
             printf("Traitement du client numero %d (%s) est terminé \n", i, tab[i].nom) ;
             defiler(&f, &current) ;
-            printf("Client %s parti \n", current.nom) ;
-
+            nb_elem-- ;
+            //printf("Client %s parti \n", current.nom) ;
+            printf("%s parti, -----PROCHAIN----- %s, %d elements restant  \n",current.nom, f.tete->client.nom, nb_elem) ;
             examination_time += tab[i].t_traitement ;
             printf("***********************************\n") ;
 
@@ -58,7 +61,8 @@ void simulation(client tab [], int n) {
         else if(temps == examination_time+tab[i].t_traitement && i!=0){
             printf("Traitement du client numero %d (%s) est terminé \n", i, tab[i].nom) ;
             defiler(&f, &current) ;
-            printf("Client %s parti \n", current.nom) ;
+            nb_elem-- ;
+            printf("%s parti, %d elements restant  \n",current.nom, nb_elem) ;
             i++ ;
             examination_time = temps ;
             printf("***********************************\n") ;
@@ -67,7 +71,6 @@ void simulation(client tab [], int n) {
 
         temps++;
     }
-     
 
     if(i == n)
         printf("Fin de la journee!\n");
