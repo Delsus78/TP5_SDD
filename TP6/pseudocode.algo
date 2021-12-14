@@ -17,16 +17,16 @@ début
     retourner result
 fin
 
-fonction inorderTree(noeud_t *ptree, int lvl) : void
+fonction inorderTree(noeud_t *ptree) : void
 début
     si ptree n'est pas null alors
         inorderTree(ptree.fils_gauche)
-        ecrire(ptree)
+        ecrire(ptree.val)
         inorderTree(ptree.fils_droit)
     fin_si
 fin
 
-fonction preorderTree(noeud_t *ptree, int lvl) : void
+fonction preorderTree(noeud_t *ptree) : void
 début
     si ptree n'est pas null alors
         ecrire(ptree)
@@ -35,7 +35,7 @@ début
     fin_si
 fin
 
-fonction postorderTree(noeud_t *ptree, int lvl) : void
+fonction postorderTree(noeud_t *ptree) : void
 début
     si ptree n'est pas null alors
         postorderTree(ptree.fils_gauche)
@@ -46,14 +46,24 @@ fin
 
 fonction breadthTree(noeud_t *ptree) : void
 début
-    noeud_t* p_temp = ptree
-    si p_temp n'est pas null alors
-        breadthTree(ptree.fils_gauche)
-        breadthTree(ptree.fils_droit)
-        free(p_temp)
+    si ptree n'est pas null alors
+        ecrire(ptree)
+        si ptree.fils_gauche != NULL alors ecrire(ptree.fils_gauche)
+        si ptree.fils_droit != NULL alors ecrire(ptree.fils_droit)
+        reccu_breadthTree(ptree.fils_gauche)
+        reccu_breadthTree(ptree.fils_droit)
     fin_si
+fin
 
-    ptree = NULL
+fonction reccu_breadthTree(noeud_t *ptree) : void
+début // on n'écrit pas la node en question contrairement au début
+      // pour le sommet
+    si ptree n'est pas null alors
+        si ptree.fils_gauche != NULL alors ecrire(ptree.fils_gauche)
+        si ptree.fils_droit != NULL alors ecrire(ptree.fils_droit)
+        reccu_breadthTree(ptree.fils_gauche)
+        reccu_breadthTree(ptree.fils_droit)
+    fin_si
 fin
 fonction maxTree(noeud_t *ptree) : int
 début
