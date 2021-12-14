@@ -1,16 +1,17 @@
 fonction insertTree(noeud_t *ptree, int val) : noeud_t*
 début
-    noeud_t* result = espace mémoire de taille noeud_t
-    result.val = val
 
     si ptree n'est pas null alors
         si ptree.val > result.val alors
-            ptree.left = result
+            insertTree(ptree.fils_gauche,val)
         sinon si ptree.val < result.val alors
-                ptree.right = result
+            insertTree(ptree.fils_droit,val)
             // sinon alors il y a égalité, donc pas besoin de nouvelle node
             fin_si
         fin_si
+    sinon
+        noeud_t* ptree = espace mémoire de taille noeud_t
+        ptree.val = val
     fin_si
 
     retourner result
@@ -18,47 +19,115 @@ fin
 
 fonction inorderTree(noeud_t *ptree, int lvl) : void
 début
-    
+    si ptree n'est pas null alors
+        inorderTree(ptree.fils_gauche)
+        ecrire(ptree)
+        inorderTree(ptree.fils_droit)
+    fin_si
 fin
 
 fonction preorderTree(noeud_t *ptree, int lvl) : void
 début
-    
+    si ptree n'est pas null alors
+        ecrire(ptree)
+        preorderTree(ptree.fils_gauche)
+        preorderTree(ptree.fils_droit)
+    fin_si
 fin
 
 fonction postorderTree(noeud_t *ptree, int lvl) : void
 début
-    
+    si ptree n'est pas null alors
+        postorderTree(ptree.fils_gauche)
+        postorderTree(ptree.fils_droit)
+        ecrire(ptree)
+    fin_si
 fin
 
 fonction breadthTree(noeud_t *ptree) : void
 début
-    
+    noeud_t* p_temp = ptree
+    si p_temp n'est pas null alors
+        breadthTree(ptree.fils_gauche)
+        breadthTree(ptree.fils_droit)
+        free(p_temp)
+    fin_si
+
+    ptree = NULL
 fin
 fonction maxTree(noeud_t *ptree) : int
 début
     noeud_t* p_temp = ptree;
-    tant que p_temp n'est pas null faire
-        p_temp = p_temp.left
-    fin_tant_que
+    si p_temp n'est pas null alors
+        
+        tant que p_temp.fils_gauche n'est pas null faire
+            p_temp = p_temp.fils_gauche
+        fin_tant_que
+    sinon 
+        p_temp.val = -1
+    fin_si
+    retourner p_temp.val
 fin
+
 fonction minTree(noeud_t *ptree) : int
 début
-    
+    noeud_t* p_temp = ptree;
+    si p_temp n'est pas null alors
+        
+        tant que p_temp.fils_droit n'est pas null faire
+            p_temp = p_temp.fils_droit
+        fin_tant_que
+    sinon 
+        p_temp.val = -1
+    fin_si
+    retourner p_temp.val
 fin
+
 fonction heightTree(noeud_t *ptree) : int
 début
-
+    si ptree n'est pas null alors
+        
+        int val_fils_gauche = 1 + heightTree(ptree.fils_gauche) 
+        int val_fils_droit = 1 + heightTree(ptree.fils_droit)
+        
+        si val_fils_gauche >= val_fils_droit alors
+            retourner val_fils_gauche
+        sinon 
+            retourner val_fils_droit
+        fin_si
+    sinon
+        retourner 0
+    fin_si
 fin
 fonction nbNodesTree(noeud_t *ptree) : int
 début
-    
+    si ptree n'est pas null alors
+        
+        int val_fils_gauche = 1 + nbNodesTree(ptree.fils_gauche) 
+        int val_fils_droit = 1 + nbNodesTree(ptree.fils_droit)
+        
+        retourner val_fils_droit + val_fils_gauche
+    sinon
+        retourner 0
+    fin_si
 fin
 fonction searchTree(noeud_t *ptree, int val) : noeud_t*
 début
-    
+    noeud_t* res;
+    si ptree n'est pas null alors
+        si ptree.val == val alors
+            res = ptree
+        fin_si
+        res = searchTree(ptree.fils_gauche,val)
+        res = searchTree(ptree.fils_droit,val)
+    fin_si
+
+    retourner res
 fin
 fonction removeTree(noeud_t *ptree, int val) : noeud_t*
-début
-    
+début 
+    noeud_t p_temp = searchTree(ptree,val)
+    // impossible de retrouver le prédécesseur dans l'arbre
+    // avec une méthode réccursive ici
+    retourner p_temp
 fin

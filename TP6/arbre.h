@@ -9,7 +9,7 @@ typedef struct noeud{
 
 //Un arbre est un pointeur sur la racine (noeud de base)
 
-noeud_t *insertTree(noeud_t *ptree, int val) ; // add val to the tree & return the new tree
+void *insertTree(noeud_t *ptree, int val) ;
 void inorderTree(noeud_t *ptree, int lvl) ; // inorder traversal of tree 
 void preorderTree(noeud_t *ptree, int lvl) ; //preorder traversal of tree 
 void postorderTree(noeud_t *ptree, int lvl); //postorder traversal of tree

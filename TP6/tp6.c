@@ -1,7 +1,25 @@
 #include "arbre.h"
 
-noeud_t *insertTree(noeud_t *ptree, int val) ; // add val to the tree & return the new tree
-void inorderTree(noeud_t *ptree, int lvl) ; // inorder traversal of tree 
+void *insertTree(noeud_t *ptree, int val) {
+
+    if (ptree != NULL)
+    {
+        if (ptree->valeur > val)
+        {
+            insertTree(ptree->fils_gauche,val);
+        } 
+        else if (ptree->valeur < val)
+        {
+            insertTree(ptree->fils_droit,val);
+        }
+    } else {
+        ptree = malloc(sizeof(noeud_t));
+        ptree->valeur = val;
+    }
+}
+void inorderTree(noeud_t *ptree, int lvl) {
+    if (ptree)
+}
 void preorderTree(noeud_t *ptree, int lvl) ; //preorder traversal of tree 
 void postorderTree(noeud_t *ptree, int lvl); //postorder traversal of tree
 void breadthTree(noeud_t *ptree) ; // breadth first traversal of tree
@@ -14,17 +32,17 @@ noeud_t *removeTree(noeud_t *ptree, int val) ; // remove val from tree and retur
 
 int main() { 
     noeud_t *myTree = NULL; // empty tree
-    myTree = insertTree(myTree, 50); 
-    myTree = insertTree(myTree, 45); 
-    myTree = insertTree(myTree, 65); 
-    myTree = insertTree(myTree, 55);
-    myTree = insertTree(myTree, 54); 
-    myTree = insertTree(myTree, 56); 
-    myTree = insertTree(myTree, 80);
-    myTree = insertTree(myTree, 70); 
-    myTree = insertTree(myTree, 85);
-    myTree = insertTree(myTree, 30);
-    myTree = insertTree(myTree, 47) ;
+    insertTree(myTree, 50); 
+    insertTree(myTree, 45); 
+    insertTree(myTree, 65); 
+    insertTree(myTree, 55);
+    insertTree(myTree, 54); 
+    insertTree(myTree, 56); 
+    insertTree(myTree, 80);
+    insertTree(myTree, 70); 
+    insertTree(myTree, 85);
+    insertTree(myTree, 30);
+    insertTree(myTree, 47) ;
     
     
     inorderTree(myTree, 0); 
