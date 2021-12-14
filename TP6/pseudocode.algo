@@ -1,0 +1,64 @@
+fonction insertTree(noeud_t *ptree, int val) : noeud_t*
+début
+    noeud_t* result = espace mémoire de taille noeud_t
+    result.val = val
+
+    si ptree n'est pas null alors
+        si ptree.val > result.val alors
+            ptree.left = result
+        sinon si ptree.val < result.val alors
+                ptree.right = result
+            // sinon alors il y a égalité, donc pas besoin de nouvelle node
+            fin_si
+        fin_si
+    fin_si
+
+    retourner result
+fin
+
+fonction inorderTree(noeud_t *ptree, int lvl) : void
+début
+    
+fin
+
+fonction preorderTree(noeud_t *ptree, int lvl) : void
+début
+    
+fin
+
+fonction postorderTree(noeud_t *ptree, int lvl) : void
+début
+    
+fin
+
+fonction breadthTree(noeud_t *ptree) : void
+début
+    
+fin
+fonction maxTree(noeud_t *ptree) : int
+début
+    noeud_t* p_temp = ptree;
+    tant que p_temp n'est pas null faire
+        p_temp = p_temp.left
+    fin_tant_que
+fin
+fonction minTree(noeud_t *ptree) : int
+début
+    
+fin
+fonction heightTree(noeud_t *ptree) : int
+début
+
+fin
+fonction nbNodesTree(noeud_t *ptree) : int
+début
+    
+fin
+fonction searchTree(noeud_t *ptree, int val) : noeud_t*
+début
+    
+fin
+fonction removeTree(noeud_t *ptree, int val) : noeud_t*
+début
+    
+fin
